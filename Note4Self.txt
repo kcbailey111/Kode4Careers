@@ -1,0 +1,10 @@
+To open a local web server use this command: python -m http.server 5500
+
+-This will allow for you to start up running the server
+-Then open Cursor command palette using shift+ctrl+p 
+-Open Browser, then paste in http://localhost:5500
+
+Python comes with a basic web server. This command serves the current folder at http://localhost:5500. 
+"localhost" means your own computer, and 5500 is just a port number I chose; 
+any free one like 8000 or 8080 works. 
+Once it's running, http://localhost:5500/about.html returns your about.html file.
