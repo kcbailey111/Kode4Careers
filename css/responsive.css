@@ -9,8 +9,8 @@
     font-size: 2.875rem;
   }
 
-  .logo-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .logo-grid__item {
+    flex-basis: calc((100% - var(--space-4)) / 2);
   }
 
   .form-card {
@@ -76,7 +76,16 @@
   }
 
   .logo-grid {
-    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+  }
+
+  .logo-grid__item {
+    flex-basis: calc((100% - 2 * var(--space-5)) / 3);
+    min-height: 148px;
+  }
+
+  .logo-grid__item img {
+    max-height: 64px;
   }
 }
 
