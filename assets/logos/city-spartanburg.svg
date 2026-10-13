@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" role="img" aria-label="City of Spartanburg">
+  <!-- Placeholder wordmark: replace with the official logo file once permission is granted. -->
+  <g fill="none" stroke="#F1F5F9" stroke-width="3" stroke-linejoin="round">
+    <path d="M10 58 V30 L22 20 L34 30 V58"/>
+    <path d="M34 58 V38 H50 V58"/>
+    <path d="M6 58 H54"/>
+  </g>
+  <text x="66" y="32" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94A3B8" letter-spacing="2">CITY OF</text>
+  <text x="66" y="54" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="800" fill="#F1F5F9">Spartanburg</text>
+</svg>

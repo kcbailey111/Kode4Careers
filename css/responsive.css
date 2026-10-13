@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Kode4Careers — Responsive Enhancements (mobile-first, min-width)
+   Base styles in style.css target small screens (< 480px).
+   ========================================================================== */
+
+/* ---------- ≥ 480px: large phones ---------- */
+@media (min-width: 480px) {
+  .hero__title {
+    font-size: 2.875rem;
+  }
+
+  .logo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .form-card {
+    padding: var(--space-7) var(--space-6);
+  }
+
+  .form-actions .btn {
+    width: auto;
+  }
+
+  .cta-banner {
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
+/* ---------- ≥ 768px: tablets ---------- */
+@media (min-width: 768px) {
+  :root {
+    --fs-2xl: 2.125rem;
+    --fs-3xl: 2.75rem;
+  }
+
+  .section {
+    padding: var(--space-9) 0;
+  }
+
+  .hero {
+    padding: var(--space-9) 0;
+  }
+
+  .hero__title {
+    font-size: 3.5rem;
+  }
+
+  .hero__subtitle {
+    font-size: var(--fs-xl);
+  }
+
+  .grid--2,
+  .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-field--full {
+    grid-column: 1 / -1;
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .logo-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- ≥ 1024px: desktop ---------- */
+@media (min-width: 1024px) {
+  .hero__title {
+    font-size: 4rem;
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .founder {
+    grid-template-columns: 360px 1fr;
+    gap: var(--space-8);
+  }
+
+  .profile-frame {
+    margin: 0;
+  }
+
+  .schedule-layout {
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-7);
+  }
+
+  .contact-aside {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+
+  /* Desktop navigation: inline links, hide hamburger */
+  .nav-toggle {
+    display: none;
+  }
+
+  .site-nav {
+    position: static;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .nav-link {
+    padding: var(--space-2) 0;
+  }
+
+  .nav-cta {
+    margin: 0 0 0 var(--space-3);
+  }
+
+  .nav-cta .btn {
+    width: auto;
+  }
+}
