@@ -53,8 +53,11 @@
           <!-- Inquiry Form -->
           <div class="card form-card">
             <!-- Replace YOUR_FORM_ID with your Formspree form ID (or point action at a Web3Forms / serverless endpoint). -->
-            <form id="consultation-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate data-fallback-email="hello@kode4careers.com">
-              <h2 class="visually-hidden">Inquiry Form</h2>
+            <form id="consultation-form" action="https://formspree.io/f/xrpeywka" method="POST" novalidate data-fallback-email="contact@kode4careers.com">
+              <div class="form-card__header">
+                <h2>Consultation Inquiry</h2>
+                <p>Tell us a little about your project and we'll follow up to schedule a call.</p>
+              </div>
 
               <div class="form-grid">
                 <div class="form-field">
@@ -78,32 +81,39 @@
                   <label for="service">Service of Interest <span class="required" aria-hidden="true">*</span></label>
                   <select id="service" name="service" required aria-describedby="service-error">
                     <option value="" selected disabled>Select a service</option>
-                    <option value="Intranet Development">Intranet Development</option>
-                    <option value="Data Analytics">Data Analytics</option>
+                    <option value="Municipal Intranet">Municipal Intranet</option>
+                    <option value="Data Analytics &amp; Power BI">Data Analytics &amp; Power BI</option>
                     <option value="AI Agent Development">AI Agent Development</option>
-                    <option value="System Automation">System Automation</option>
-                    <option value="General Consulting">General Consulting</option>
+                    <option value="System Integration &amp; Automation">System Integration &amp; Automation</option>
+                    <option value="General Tech Consulting">General Tech Consulting</option>
                   </select>
                   <p class="error-message" id="service-error" aria-live="polite"></p>
                 </div>
 
                 <div class="form-field">
-                  <label for="timeframe">Preferred Timeframe</label>
+                  <label for="timeframe">Preferred Timeframe <span class="optional">(optional)</span></label>
                   <select id="timeframe" name="timeframe">
-                    <option value="Immediate">Immediate</option>
-                    <option value="1–3 Months">1–3 Months</option>
+                    <option value="" selected>Select a timeframe</option>
+                    <option value="Immediate (1-2 weeks)">Immediate (1-2 weeks)</option>
+                    <option value="1-3 Months">1-3 Months</option>
                     <option value="3+ Months">3+ Months</option>
                   </select>
                 </div>
 
                 <div class="form-field form-field--full">
-                  <label for="message">Project Details / Message <span class="required" aria-hidden="true">*</span></label>
+                  <label for="message">Project Details / Scope <span class="required" aria-hidden="true">*</span></label>
                   <textarea id="message" name="message" placeholder="Tell us about your goals, current systems, and any challenges you're facing." required aria-describedby="message-error"></textarea>
                   <p class="error-message" id="message-error" aria-live="polite"></p>
                 </div>
               </div>
 
-              <input type="hidden" name="_subject" value="New consultation inquiry — Kode4Careers">
+              <!-- Honeypot: real users never see or fill this; Formspree discards submissions where it has a value. -->
+              <div class="form-honeypot" aria-hidden="true">
+                <label for="gotcha">Leave this field empty</label>
+                <input type="text" id="gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+              </div>
+
+              <input type="hidden" name="_subject" value="New consultation inquiry — Kode4Careers" data-subject-base="New consultation inquiry">
 
               <div class="form-actions">
                 <button type="submit" class="btn btn--primary">
@@ -115,37 +125,30 @@
               <div id="form-status" class="form-status" role="alert"></div>
             </form>
 
-            <div id="form-success" class="form-success" tabindex="-1" hidden>
+            <div id="form-success" class="form-success" tabindex="-1" role="status" hidden>
               <div class="form-success__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
-              <h2>Thank You!</h2>
-              <p>Your inquiry has been received. We'll review your project details and respond within 24–48 business hours.</p>
+              <h2>Thank you!</h2>
+              <p>Your inquiry has been received. We'll be in touch shortly.</p>
               <button type="button" id="form-reset" class="btn btn--secondary">Submit Another Inquiry</button>
             </div>
           </div>
 
-          <!-- Direct Contact Info -->
+          <!-- Direct Contact & Expectations -->
           <aside class="contact-aside" aria-labelledby="contact-title">
-            <div class="card form-card">
-              <h2 id="contact-title" class="footer-heading">Direct Contact</h2>
+            <div class="card form-card contact-card">
+              <h2 id="contact-title" class="contact-card__title">Prefer Direct Outreach?</h2>
+              <p class="contact-card__intro">Skip the form and reach out directly. We're happy to talk through your project.</p>
+
               <ul class="contact-list">
                 <li class="contact-item">
                   <span class="card__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
                   </span>
                   <div>
-                    <h3>Email</h3>
-                    <p><a href="mailto:hello@kode4careers.com">hello@kode4careers.com</a></p>
-                  </div>
-                </li>
-                <li class="contact-item">
-                  <span class="card__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
-                  </span>
-                  <div>
-                    <h3>Response Time</h3>
-                    <p>Within 24–48 business hours</p>
+                    <h3>Email Us</h3>
+                    <p><a class="contact-card__email" href="mailto:contact@kode4careers.com">contact@kode4careers.com</a></p>
                   </div>
                 </li>
                 <li class="contact-item">
@@ -154,10 +157,15 @@
                   </span>
                   <div>
                     <h3>Location</h3>
-                    <p>Remote &amp; on-site engagements available</p>
+                    <p>Based in Spartanburg, SC &bull; Serving Clients Nationwide</p>
                   </div>
                 </li>
               </ul>
+
+              <p class="response-badge">
+                <span class="response-badge__dot" aria-hidden="true"></span>
+                We typically respond within 24 business hours
+              </p>
             </div>
           </aside>
         </div>
@@ -188,7 +196,7 @@
         <div>
           <h2 class="footer-heading">Connect</h2>
           <ul class="footer-links">
-            <li><a href="mailto:hello@kode4careers.com">hello@kode4careers.com</a></li>
+            <li><a href="mailto:contact@kode4careers.com">contact@kode4careers.com</a></li>
           </ul>
           <ul class="social-links">
             <li>
@@ -202,7 +210,7 @@
               </a>
             </li>
             <li>
-              <a href="mailto:hello@kode4careers.com" aria-label="Email Kode4Careers">
+              <a href="mailto:contact@kode4careers.com" aria-label="Email Kode4Careers">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
               </a>
             </li>

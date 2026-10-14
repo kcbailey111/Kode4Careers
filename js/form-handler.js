@@ -1,4 +1,4 @@
-/* Kode4Careers — Consultation inquiry form: validation & submission */
+/* Kode4Careers — Consultation inquiry form: validation & async submission (Formspree / Web3Forms) */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("consultation-form");
@@ -9,8 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const status = document.getElementById("form-status");
   const success = document.getElementById("form-success");
   const resetBtn = document.getElementById("form-reset");
+  const honeypot = form.elements._gotcha;
+  const subjectField = form.elements._subject;
   const fallbackEmail = form.dataset.fallbackEmail;
 
+  const DEFAULT_LABEL = submitLabel.textContent;
+  const LOADING_LABEL = "Sending Inquiry...";
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   const rules = {
@@ -54,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const setLoading = (loading) => {
     submitBtn.disabled = loading;
     submitBtn.setAttribute("aria-busy", String(loading));
-    submitLabel.textContent = loading ? "Sending…" : "Submit Inquiry";
+    submitLabel.textContent = loading ? LOADING_LABEL : DEFAULT_LABEL;
   };
 
   const showError = (html) => {
@@ -65,6 +69,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearStatus = () => {
     status.className = "form-status";
     status.textContent = "";
+  };
+
+  const showSuccess = () => {
+    form.reset();
+    Object.keys(rules).forEach((name) => {
+      const field = form.elements[name];
+      if (field) field.removeAttribute("aria-invalid");
+    });
+    form.hidden = true;
+    success.hidden = false;
+    success.focus();
+  };
+
+  // e.g. "New consultation inquiry: AI Agent Development — Jane Smith"
+  const updateSubject = () => {
+    if (!subjectField) return;
+    const base = subjectField.dataset.subjectBase || "New consultation inquiry";
+    const service = form.elements.service.value;
+    const name = form.elements.name.value.trim();
+    subjectField.value = `${base}${service ? `: ${service}` : ""}${name ? ` — ${name}` : ""}`;
+  };
+
+  // Formspree returns { errors: [{ message }] } on validation failures.
+  const getServerError = async (response) => {
+    try {
+      const data = await response.json();
+      if (Array.isArray(data.errors) && data.errors.length) {
+        return data.errors.map((err) => err.message).join(" ");
+      }
+      if (data.message) return data.message;
+    } catch {
+      /* Non-JSON response body */
+    }
+    return "";
   };
 
   Object.keys(rules).forEach((name) => {
@@ -82,6 +120,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!validateForm()) return;
 
+    // Bots that fill the honeypot get a fake success so they don't retry.
+    if (honeypot && honeypot.value) {
+      showSuccess();
+      return;
+    }
+
     const emailLink = `<a href="mailto:${fallbackEmail}">${fallbackEmail}</a>`;
 
     if (form.action.includes("YOUR_FORM_ID")) {
@@ -91,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    updateSubject();
     setLoading(true);
 
     try {
@@ -100,15 +145,17 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { Accept: "application/json" },
       });
 
-      if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+      if (!response.ok) {
+        const serverError = await getServerError(response);
+        throw new Error(serverError || `Request failed with status ${response.status}`);
+      }
 
-      form.reset();
-      form.hidden = true;
-      success.hidden = false;
-      success.focus();
+      showSuccess();
     } catch (error) {
       console.error("Form submission error:", error);
-      showError(`Something went wrong sending your inquiry. Please try again, or email us at ${emailLink}.`);
+      showError(
+        `<strong>We couldn't send your inquiry.</strong> Please check your connection and try again, or email us directly at ${emailLink}.`
+      );
     } finally {
       setLoading(false);
     }
@@ -118,6 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetBtn.addEventListener("click", () => {
       success.hidden = true;
       form.hidden = false;
+      clearStatus();
       form.elements.name.focus();
     });
   }
