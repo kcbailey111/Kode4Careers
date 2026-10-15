@@ -17,6 +17,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const LOADING_LABEL = "Sending Inquiry...";
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+  // Client-side throttling only deters casual abuse; Formspree enforces the real limits server-side.
+  const MIN_FILL_MS = 3000;
+  const COOLDOWN_MS = 60 * 1000;
+  const MAX_PER_HOUR = 3;
+  const HISTORY_KEY = "k4c-inquiry-history";
+  const loadedAt = Date.now();
+
+  const getHistory = () => {
+    try {
+      const hourAgo = Date.now() - 60 * 60 * 1000;
+      return (JSON.parse(localStorage.getItem(HISTORY_KEY)) || []).filter((t) => t > hourAgo);
+    } catch {
+      return [];
+    }
+  };
+
+  const recordSubmission = () => {
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify([...getHistory(), Date.now()]));
+    } catch {
+      /* Storage unavailable (private mode) */
+    }
+  };
+
+  const getThrottleMessage = () => {
+    const history = getHistory();
+    if (history.length >= MAX_PER_HOUR) {
+      return "You've reached the submission limit. Please try again later";
+    }
+    const last = history[history.length - 1];
+    if (last && Date.now() - last < COOLDOWN_MS) {
+      return "Please wait a minute before sending another inquiry";
+    }
+    return "";
+  };
+
   const rules = {
     name: (value) => (value.trim().length >= 2 ? "" : "Please enter your full name."),
     email: (value) => {
@@ -116,17 +152,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (submitBtn.disabled) return;
     clearStatus();
 
     if (!validateForm()) return;
 
-    // Bots that fill the honeypot get a fake success so they don't retry.
-    if (honeypot && honeypot.value) {
+    // Bots that fill the honeypot or submit instantly get a fake success so they don't retry.
+    if ((honeypot && honeypot.value) || Date.now() - loadedAt < MIN_FILL_MS) {
       showSuccess();
       return;
     }
 
     const emailLink = `<a href="mailto:${fallbackEmail}">${fallbackEmail}</a>`;
+
+    const throttleMessage = getThrottleMessage();
+    if (throttleMessage) {
+      showError(`${throttleMessage}, or email us directly at ${emailLink}.`);
+      return;
+    }
 
     if (form.action.includes("YOUR_FORM_ID")) {
       showError(
@@ -150,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(serverError || `Request failed with status ${response.status}`);
       }
 
+      recordSubmission();
       showSuccess();
     } catch (error) {
       console.error("Form submission error:", error);

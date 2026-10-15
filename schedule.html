@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io; base-uri 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Schedule a Consultation | Kode4Careers</title>
   <meta name="description" content="Schedule a consultation with Kode4Careers to discuss your intranet, data analytics, AI agent, or automation project.">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
@@ -31,7 +33,6 @@
           <li><a class="nav-link" href="index.html">Home</a></li>
           <li><a class="nav-link" href="about.html">About Us</a></li>
           <li><a class="nav-link" href="schedule.html" aria-current="page">Schedule Consultation</a></li>
-          <li class="nav-cta"><a class="btn btn--primary btn--sm" href="schedule.html">Book a Call</a></li>
         </ul>
       </nav>
     </div>
@@ -62,19 +63,19 @@
               <div class="form-grid">
                 <div class="form-field">
                   <label for="name">Full Name <span class="required" aria-hidden="true">*</span></label>
-                  <input type="text" id="name" name="name" autocomplete="name" placeholder="Jane Smith" required aria-describedby="name-error">
+                  <input type="text" id="name" name="name" maxlength="100" autocomplete="name" placeholder="Jane Smith" required aria-describedby="name-error">
                   <p class="error-message" id="name-error" aria-live="polite"></p>
                 </div>
 
                 <div class="form-field">
                   <label for="email">Email Address <span class="required" aria-hidden="true">*</span></label>
-                  <input type="email" id="email" name="email" autocomplete="email" placeholder="jane@company.com" required aria-describedby="email-error">
+                  <input type="email" id="email" name="email" maxlength="254" autocomplete="email" placeholder="jane@company.com" required aria-describedby="email-error">
                   <p class="error-message" id="email-error" aria-live="polite"></p>
                 </div>
 
                 <div class="form-field form-field--full">
                   <label for="company">Company / Organization <span class="optional">(optional)</span></label>
-                  <input type="text" id="company" name="company" autocomplete="organization" placeholder="Organization name">
+                  <input type="text" id="company" name="company" maxlength="150" autocomplete="organization" placeholder="Organization name">
                 </div>
 
                 <div class="form-field">
@@ -102,7 +103,7 @@
 
                 <div class="form-field form-field--full">
                   <label for="message">Project Details / Scope <span class="required" aria-hidden="true">*</span></label>
-                  <textarea id="message" name="message" placeholder="Tell us about your goals, current systems, and any challenges you're facing." required aria-describedby="message-error"></textarea>
+                  <textarea id="message" name="message" maxlength="5000" placeholder="Tell us about your goals, current systems, and any challenges you're facing." required aria-describedby="message-error"></textarea>
                   <p class="error-message" id="message-error" aria-live="polite"></p>
                 </div>
               </div>

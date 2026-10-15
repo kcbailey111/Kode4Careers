@@ -397,14 +397,6 @@ ul {
   color: var(--color-accent);
 }
 
-.nav-cta {
-  margin-top: var(--space-3);
-}
-
-.nav-cta .btn {
-  width: 100%;
-}
-
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
