@@ -1,4 +1,4 @@
-/* Kode4Careers — Global UI behaviors */
+/* Christian Systems Implementation — Global UI behaviors */
 
 document.documentElement.classList.remove("no-js");
 

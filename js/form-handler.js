@@ -1,4 +1,4 @@
-/* Kode4Careers — Consultation inquiry form: validation & async submission (Formspree / Web3Forms) */
+/* Christian Systems Implementation — Consultation inquiry form: validation & async submission (Formspree / Web3Forms) */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("consultation-form");

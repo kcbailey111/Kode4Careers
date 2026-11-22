@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kode4Careers — Responsive Enhancements (mobile-first, min-width)
+   Christian Systems Implementation — Responsive Enhancements (mobile-first, min-width)
    Base styles in style.css target small screens (< 480px).
    ========================================================================== */
 
@@ -28,6 +28,14 @@
 
 /* ---------- ≥ 768px: tablets ---------- */
 @media (min-width: 768px) {
+  .logo {
+    font-size: var(--fs-base);
+  }
+
+  .logo__text {
+    max-width: none;
+  }
+
   :root {
     --fs-2xl: 2.125rem;
     --fs-3xl: 2.75rem;

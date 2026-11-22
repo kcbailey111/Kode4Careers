@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kode4Careers — Core Design System
+   Christian Systems Implementation — Core Design System
    Mobile-first base styles. Breakpoint enhancements live in responsive.css.
    ========================================================================== */
 
@@ -283,11 +283,17 @@ ul {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  min-width: 0;
   font-family: var(--font-heading);
-  font-size: var(--fs-lg);
+  font-size: 0.8125rem;
   font-weight: 800;
+  line-height: 1.15;
   color: var(--color-text);
   letter-spacing: -0.02em;
+}
+
+.logo__text {
+  max-width: 9.75rem;
 }
 
 .logo:hover {
