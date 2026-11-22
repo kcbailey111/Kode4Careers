@@ -467,6 +467,37 @@ ul {
   color: var(--color-muted);
 }
 
+.page-hero p.page-hero__location {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem 0.55rem;
+  max-width: 40rem;
+  margin: var(--space-4) auto 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.page-hero__location span {
+  white-space: nowrap;
+}
+
+.page-hero__location span + span::before {
+  content: "•";
+  margin-right: 0.55rem;
+}
+
+.page-hero__location svg {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
 /* ---------- Cards ---------- */
 .card {
   position: relative;
@@ -705,6 +736,8 @@ ul {
   gap: var(--space-6);
   grid-template-columns: 1fr;
   align-items: start;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .form-card {

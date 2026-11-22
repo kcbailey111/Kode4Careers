@@ -163,17 +163,25 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const emailLink = `<a href="mailto:${fallbackEmail}">${fallbackEmail}</a>`;
+    const emailLink = fallbackEmail
+      ? ` <a href="mailto:${fallbackEmail}">${fallbackEmail}</a>`
+      : "";
 
     const throttleMessage = getThrottleMessage();
     if (throttleMessage) {
-      showError(`${throttleMessage}, or email us directly at ${emailLink}.`);
+      showError(
+        emailLink
+          ? `${throttleMessage}, or email us directly at${emailLink}.`
+          : `${throttleMessage}.`
+      );
       return;
     }
 
     if (form.action.includes("YOUR_FORM_ID")) {
       showError(
-        `Online submissions aren't available yet. Please email us directly at ${emailLink} and we'll get back to you shortly.`
+        emailLink
+          ? `Online submissions aren't available yet. Please email us directly at${emailLink} and we'll get back to you shortly.`
+          : "Online submissions aren't available yet. Please try again later."
       );
       return;
     }
@@ -198,7 +206,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Form submission error:", error);
       showError(
-        `<strong>We couldn't send your inquiry.</strong> Please check your connection and try again, or email us directly at ${emailLink}.`
+        emailLink
+          ? `<strong>We couldn't send your inquiry.</strong> Please check your connection and try again, or email us directly at${emailLink}.`
+          : `<strong>We couldn't send your inquiry.</strong> Please check your connection and try again.`
       );
     } finally {
       setLoading(false);
